@@ -7,9 +7,6 @@ const rs = require('readline-sync');
 
 (async () => {
 
-    // set console title to "Tiktok Downloader"
-    process.title = 'Tiktok Downloader No Watermark';
-
     console.log('\n[+] Tiktok Downloader No Watermark');
     var username = rs.question('\n[+] Enter username : ');
 
