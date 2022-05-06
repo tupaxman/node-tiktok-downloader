@@ -48,7 +48,6 @@ const rs = require('readline-sync');
         .then(res => res.json())
         .then(data => {
             if(data.status == 200) return data.url[Math.floor(Math.random() * data.url.length)];
-            else return data.message;
         })
 
         if(tryDownload)
