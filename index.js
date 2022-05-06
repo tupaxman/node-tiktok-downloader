@@ -25,7 +25,7 @@ const rs = require('readline-sync');
     const context = await browser.createIncognitoBrowserContext();
     const page = await context.newPage();
     await page.setUserAgent(randomuseragent.getRandom());
-    console.log(chalk.bgRed("\n> Scraping "+ username +"'s tiktok videos ... \n"));
+    console.log(chalk.bgGrey("\n> Scraping "+ username +"'s tiktok videos ... \n"));
     await page.goto('https://www.tiktok.com/@' + username);
 
     await autoScroll(page);
