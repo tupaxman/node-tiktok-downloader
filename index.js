@@ -7,11 +7,10 @@ const rs = require('readline-sync');
 
 (async () => {
 
-    // set console title to "Tiktok Downloader"
-    process.title = 'Tiktok Downloader No Watermark';
+    console.log(chalk.bgBlue('\nTiktok Downloader No Watermark'));
+    console.log(chalk.bgMagenta('\nAuthor: @dkmpostor'));
 
-    console.log('\n[+] Tiktok Downloader No Watermark');
-    var username = rs.question('\n[+] Enter username : ');
+    var username = rs.question('\n> Enter username : ');
 
     const browser = await puppeteer.launch({
         headless: true,
@@ -26,14 +25,14 @@ const rs = require('readline-sync');
     const context = await browser.createIncognitoBrowserContext();
     const page = await context.newPage();
     await page.setUserAgent(randomuseragent.getRandom());
+    console.log(chalk.bgRed("\n> Scraping " + username + "'s tiktok videos ... \n"));
     await page.goto('https://www.tiktok.com/@' + username);
 
-    console.log(chalk.blue('\n[+] Trying to get all posts ...\n'));
     await autoScroll(page);
 
     // get all the posts
     let posts = await page.$x('/html/body/div[2]/div[2]/div[2]/div/div[2]/div[2]/div/div');
-    console.log('[+] Found : ' + posts.length + ' posts\n');
+    console.log(chalk.bgGreen('> Found : ' + posts.length + ' posts\n'));
     if (!fs.existsSync('result')) fs.mkdirSync('result')
     if (!fs.existsSync('result/' + username)) fs.mkdirSync('result/' + username)
     for (let i = 1; i <= posts.length; i++) {
