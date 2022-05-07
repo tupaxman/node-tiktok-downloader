@@ -25,7 +25,7 @@ const rs = require('readline-sync');
     const context = await browser.createIncognitoBrowserContext();
     const page = await context.newPage();
     await page.setUserAgent(randomuseragent.getRandom());
-    console.log(chalk.bgRed("\n> Scraping "+ username +"'s tiktok videos ... \n"));
+    console.log(chalk.bgGrey("\n> Scraping "+ username +"'s tiktok videos ... \n"));
     await page.goto('https://www.tiktok.com/@' + username);
 
     await autoScroll(page);
@@ -41,14 +41,10 @@ const rs = require('readline-sync');
         console.log(i + '. ' + url);
 
         let filename = url.split('/')[url.split('/').length - 1] + '.mp4';
-        let tryDownload = await fetch('https://dkmpostor.herokuapp.com/tiktok-no-watermark?url='+ url, 
-        {
-            method: 'GET'
-        })
+        let tryDownload = await fetch('https://dkmpostor.herokuapp.com/tiktok-no-watermark?url='+ url)
         .then(res => res.json())
         .then(data => {
             if(data.status == 200) return data.url[Math.floor(Math.random() * data.url.length)];
-            else return data.message;
         })
 
         if(tryDownload)
