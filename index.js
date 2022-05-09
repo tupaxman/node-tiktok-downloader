@@ -13,7 +13,7 @@ const rs = require('readline-sync');
     var username = rs.question('\n> Enter username : ');
 
     const browser = await puppeteer.launch({
-        headless: true,
+        headless: false,
         args: [
             '--disable-notifications',
             '--no-sandbox',
@@ -24,7 +24,10 @@ const rs = require('readline-sync');
 
     const context = await browser.createIncognitoBrowserContext();
     const page = await context.newPage();
-    await page.setUserAgent(randomuseragent.getRandom());
+    await page.setUserAgent(randomuseragent.getRandom(function (ua) {
+        // set user agent using windows
+        return ua.osName === 'Windows';
+    }));
     console.log(chalk.bgGrey("\n> Scraping "+ username +"'s tiktok videos ... \n"));
     await page.goto('https://www.tiktok.com/@' + username);
 
@@ -83,7 +86,7 @@ async function autoScroll(page){
                     clearInterval(timer);
                     resolve();
                 }
-            }, 100);
+            }, 500);
         });
     });
 }
