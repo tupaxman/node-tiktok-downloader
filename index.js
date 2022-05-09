@@ -86,7 +86,7 @@ async function autoScroll(page){
                     clearInterval(timer);
                     resolve();
                 }
-            }, 500);
+            }, 500); // time in ms .. If u have slow internet connection, increase this value
         });
     });
 }
