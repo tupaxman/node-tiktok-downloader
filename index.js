@@ -31,7 +31,7 @@ const rs = require('readline-sync');
     console.log(chalk.bgGrey("\n> Scraping "+ username +"'s tiktok videos ... \n"));
     await page.goto('https://www.tiktok.com/@' + username);
 
-    await autoScroll(page);
+    await page.evaluate(scrollToBottom);
 
     // get all the posts
     let posts = await page.$x('/html/body/div[2]/div[2]/div[2]/div/div[2]/div[2]/div/div');
@@ -72,21 +72,16 @@ const rs = require('readline-sync');
 })();
 
 // please create a function to scroll down until can't scroll anymore
-async function autoScroll(page){
-    await page.evaluate(async () => {
-        await new Promise((resolve, reject) => {
-            var totalHeight = 0;
-            var distance = 100;
-            var timer = setInterval(() => {
-                var scrollHeight = document.body.scrollHeight;
-                window.scrollBy(0, distance);
-                totalHeight += distance;
-
-                if(totalHeight >= scrollHeight - window.innerHeight){
-                    clearInterval(timer);
-                    resolve();
-                }
-            }, 500); // time in ms .. If u have slow internet connection, increase this value
-        });
+async function scrollToBottom() {
+    await new Promise(resolve => {
+      const distance = 100; // should be less than or equal to window.innerHeight
+      const delay = 100;
+      const timer = setInterval(() => {
+        document.scrollingElement.scrollBy(0, distance);
+        if (document.scrollingElement.scrollTop + window.innerHeight >= document.scrollingElement.scrollHeight) {
+          clearInterval(timer);
+          resolve();
+        }
+      }, delay);
     });
 }
