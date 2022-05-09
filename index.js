@@ -71,7 +71,7 @@ const rs = require('readline-sync');
 
 })();
 
-// please create function to scroll down until can't scroll anymore
+// please create a function to scroll down until can't scroll anymore
 async function autoScroll(page){
     await page.evaluate(async () => {
         await new Promise((resolve, reject) => {
