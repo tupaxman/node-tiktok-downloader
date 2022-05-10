@@ -1,9 +1,11 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-extra');
 const fetch = require('node-fetch');
 const chalk = require('chalk');
 const fs = require('fs');
 const randomuseragent = require('random-useragent');
 const rs = require('readline-sync');
+const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+puppeteer.use(StealthPlugin());
 
 (async () => {
 
@@ -74,8 +76,8 @@ const rs = require('readline-sync');
 // please create a function to scroll down until can't scroll anymore
 async function scrollToBottom() {
     await new Promise(resolve => {
-      const distance = 100; // should be less than or equal to window.innerHeight
-      const delay = 100;
+      const distance = 300; // should be less than or equal to window.innerHeight
+      const delay = 300;
       const timer = setInterval(() => {
         document.scrollingElement.scrollBy(0, distance);
         if (document.scrollingElement.scrollTop + window.innerHeight >= document.scrollingElement.scrollHeight) {
